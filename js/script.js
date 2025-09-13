@@ -19,7 +19,7 @@ const analytics = window._analytics
   ? _analytics.init({ app: "standlog" })
   : null;
 
-const ANALYTICS_API_URL = "";
+const ANALYTICS_API_URL = "http://localhost:3000/api";
 
 class StandLogAnalytics {
   key;
@@ -117,6 +117,10 @@ class StandLogAnalytics {
       sessionId: this.sessionData.sessionId,
       userId: this.sessionData.userId,
     };
+
+    if (this.config.debug) {
+      console.log("🖱️ Click tracked:", clickData);
+    }
 
     this.addEvent(clickData);
     this.sessionData.clicks++;
@@ -540,8 +544,15 @@ class StandLogAnalytics {
   addEvent(eventData) {
     this.events.push(eventData);
 
-    // Queue for sending (send every 10 events or 30 seconds)
-    if (this.events.length >= 10) {
+    if (this.config.debug) {
+      console.log(`📊 Event added (${this.events.length}/5):`, eventData.type);
+    }
+
+    // Queue for sending (send every 5 events or on page unload)
+    if (this.events.length >= 5) {
+      if (this.config.debug) {
+        console.log("🚀 Sending batch of 5 events...");
+      }
       this.sendEvents();
     }
   }
@@ -559,7 +570,12 @@ class StandLogAnalytics {
         events: this.events.map((event) => this.formatEventForAPI(event)),
       };
 
-      await fetch(`${ANALYTICS_API_URL}/events`, {
+      if (this.config.debug) {
+        console.log("📤 Sending payload to API:", payload);
+        console.log("🌐 API URL:", `${ANALYTICS_API_URL}/event`);
+      }
+
+      await fetch(`${ANALYTICS_API_URL}/event`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

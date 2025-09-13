@@ -1,13 +1,39 @@
 {
-  "name": "standlog-cdn-script",
-  "version": "1.0.0",
-  "description": "StandLog CDN TypeScript project",
-  "main": "script.js",
+  "name": "standlog-analytics",
+  "version": "1.0.0-mvp",
+  "description": "Website Analytics MVP - Interactive heatmaps, funnels, personas, real-time dashboard, and integrations",
+  "main": "js/script.js",
   "scripts": {
-    "build": "tsc script.ts --outDir . --target es2020 --module commonjs",
-    "build:watch": "tsc script.ts --outDir . --target es2020 --module commonjs --watch"
+    "minify:jsFolder": "uglifyjs-folder ./js -eo ./standlog.min.js",
+    "minify:jsFolderOne": "uglifyjs-folder ./js -o ./standlog.min.js",
+    "clean:dist": "rm -rf dist",
+    "rename:dist": "mv standlog.min.js dist",
+    "build": "npm run clean:dist && npm run minify:jsFolder && npm run rename:dist",
+    "dev": "npm run build && open index.html",
+    "test": "echo 'Open index.html in browser to test MVP features'"
   },
+  "keywords": [
+    "analytics",
+    "heatmaps",
+    "funnels",
+    "personas",
+    "dashboard",
+    "tracking",
+    "mvp",
+    "javascript"
+  ],
+  "author": "Valeh Ismayilov",
+  "license": "ISC",
   "devDependencies": {
-    "typescript": "^5.0.0"
+    "uglifyjs-folder": "3.3.0",
+    "terser": "5.16.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/valehismayilov/standlog-analytics"
+  },
+  "homepage": "https://standlog.com",
+  "engines": {
+    "node": ">=14.0.0"
   }
 }

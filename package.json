@@ -1,0 +1,13 @@
+{
+  "name": "standlog-cdn-script",
+  "version": "1.0.0",
+  "description": "StandLog CDN TypeScript project",
+  "main": "script.js",
+  "scripts": {
+    "build": "tsc script.ts --outDir . --target es2020 --module commonjs",
+    "build:watch": "tsc script.ts --outDir . --target es2020 --module commonjs --watch"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

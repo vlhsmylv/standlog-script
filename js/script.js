@@ -19,7 +19,7 @@ const analytics = window._analytics
   ? _analytics.init({ app: "standlog" })
   : null;
 
-const ANALYTICS_API_URL = "http://localhost:3000/api";
+const ANALYTICS_API_URL = "https://hackathon-api.opencnt.com/api";
 
 class StandLogAnalytics {
   key;
